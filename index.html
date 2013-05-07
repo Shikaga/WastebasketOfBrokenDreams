@@ -3,9 +3,15 @@
 		<script type="text/javascript" src="js/main.js"></script>
 		<title>New Development Project</title>
 		<link rel="stylesheet" href="css/main.css">
+		<script src="lib/jquery.min.js"></script>
 	</head>
 	<body>
 		<div id="testbar"><a class="testbar" href="test/test.html" target="_blank">Run the Tests!</a></div>
-		Hello World!
+		<div id="main">
+			<div id="wastebasket">
+				<button id="drawIdeasButton" onclick="setWords()">Draw Ideas</button>
+			</div>
+			<div id="idea1" class="idea"></div><div id="idea2" class="idea"></div>
+		</div>
 	</body>
 </html>

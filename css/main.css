@@ -20,3 +20,27 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 {
 	color:#528CE0;
 }
+
+#main {
+	width:400px;
+	height:400px;
+	margin:auto;
+}
+
+#wastebasket {
+
+	background-color: #999999;
+}
+
+#drawIdeasButton {
+	width:100px;
+	height:100px;
+	margin: 150px;
+}
+
+.idea {
+	width:50%;
+	margin:auto;
+	float:left;
+	text-align: center;
+}
