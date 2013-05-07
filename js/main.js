@@ -16,6 +16,8 @@ function setWordsToDivs(div1, div2) {
 	)
 }
 
+var timerId;
+
 function ReadySetArt() {
 	setWordsToDivs(document.getElementById("idea1"), document.getElementById("idea2"));
 	var timer = new Timer();
@@ -23,7 +25,10 @@ function ReadySetArt() {
 	var hoursDiv = document.getElementById("hours");
 	var minutesDiv = document.getElementById("minutes");
 	var secondsDiv = document.getElementById("seconds");
-	setInterval(function() {
+	if (timerId) {
+		clearInterval(timerId)
+	}
+	timerId = setInterval(function() {
 		var time = timer.getTimeRemaining();
 		hoursDiv.innerHTML = time.hours;
 		minutesDiv.innerHTML = time.minutes;
