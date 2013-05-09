@@ -50,9 +50,7 @@ console.log("Server running at http://127.0.0.1:8000/");
 
 io.sockets.on('connection', function (socket) {
 	socket.on('chat', function (data) {
-		socket.broadcast.emit("chat", data);
-		socket.emit("chat", data);
-		console.log(data);
+		sendChatMessages(data)
 	});
 	socket.on('createLobby', function() {
 		var data = createLobby();
@@ -64,11 +62,21 @@ io.sockets.on('connection', function (socket) {
 		lobby.connectedSockets.push(socket);
 	});
 	socket.on("loginGuest", function(data) {
-		console.log("Login Guest", data);
+		var lobby = lobbies[data.lobbyId];
+		lobby.connectedSockets.push(socket);
 	});
 });
 
 var lobbies = [];
+
+function sendChatMessages(data) {
+	console.log(data);
+	console.log(data.lobby);
+	var lobby = lobbies[data.lobby];
+	for (var i=0; i < lobby.connectedSockets.length; i++) {
+		lobby.connectedSockets[i].emit("chat", data);
+	}
+}
 
 
 function createLobby() {
@@ -77,5 +85,4 @@ function createLobby() {
 	return {lobbyId: lobbies.length-1, password: password};
 }
 
-
-
+//Use node rooms

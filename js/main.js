@@ -56,6 +56,7 @@ Timer.prototype.getTimeRemaining = function() {
 
 var socket = io.connect('http://localhost:8001');
 socket.on('chat', function (data) {
+	console.log(data);
 	receiveChatMessage(data);
 });
 
@@ -63,6 +64,7 @@ function sendChatMessage(user,message) {
 }
 
 function receiveChatMessage(data) {
+	console.log(data);
 	var messagesDiv = document.getElementById("chatMessages");
 	var messageDiv = document.createElement("div");
 	messageDiv.innerHTML = data.user + ": " + data.message;
@@ -73,12 +75,13 @@ function chatButtonClicked() {
 	var message = document.getElementById("chatMessage").value;
 	var username = document.getElementById("username").value;
 	document.getElementById("chatMessage").value = "";
-	socket.emit('chat', { user: username, message: message });
+	socket.emit('chat', { lobby: lobbyIdA, user: username, message: message });
 }
 
 function createLobby() {
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
+		lobbyIdA = data.lobbyId;
 		console.log("Lobby created", data);
 		var adminUrl = data.lobbyId + "A" + data.password;
 		var guestUrl = data.lobbyId;
@@ -90,6 +93,8 @@ function createLobby() {
 		loginAdmin(data.lobbyId, data.password);
 	});
 }
+
+var lobbyIdA;
 
 function joinLobbyFromUrl() {
 	var hash = document.location.hash.substring(1);
@@ -107,6 +112,7 @@ function joinLobbyFromUrl() {
 		} else {
 			console.log("WTF?");
 		}
+		lobbyIdA = parseInt(lobbyId);
 	} else {
 		console.log("Anonymous user")
 	}
