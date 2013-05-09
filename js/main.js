@@ -53,3 +53,73 @@ Timer.prototype.getTimeRemaining = function() {
 	var seconds = Math.floor(timeRemaining/1000 % 60);
 	return {hours: hours, minutes: minutes, seconds: seconds};
 }
+
+var socket = io.connect('http://localhost:8001');
+socket.on('chat', function (data) {
+	receiveChatMessage(data);
+});
+
+function sendChatMessage(user,message) {
+}
+
+function receiveChatMessage(data) {
+	var messagesDiv = document.getElementById("chatMessages");
+	var messageDiv = document.createElement("div");
+	messageDiv.innerHTML = data.user + ": " + data.message;
+	messagesDiv.appendChild(messageDiv);
+}
+
+function chatButtonClicked() {
+	var message = document.getElementById("chatMessage").value;
+	var username = document.getElementById("username").value;
+	document.getElementById("chatMessage").value = "";
+	socket.emit('chat', { user: username, message: message });
+}
+
+function createLobby() {
+	socket.emit("createLobby")
+	socket.on("lobbyCreated", function(data) {
+		console.log("Lobby created", data);
+		var adminUrl = data.lobbyId + "A" + data.password;
+		var guestUrl = data.lobbyId;
+
+		document.getElementById("adminUrl").value = document.location.href + "#" + adminUrl;
+		document.getElementById("guestUrl").value = document.location.href + "#" + guestUrl;
+
+		document.location.hash = adminUrl;
+		loginAdmin(data.lobbyId, data.password);
+	});
+}
+
+function joinLobbyFromUrl() {
+	var hash = document.location.hash.substring(1);
+	if (hash != "") {
+		if (hash.indexOf("A") !== -1) {
+			var lobbyId = hash.split("A")[0];
+			var password = hash.split("A")[1];
+		} else {
+			var lobbyId = hash;
+		}
+		if (password) {
+			loginAdmin(lobbyId,password);
+		} else if (lobbyId ){
+			loginGuest(lobbyId);
+		} else {
+			console.log("WTF?");
+		}
+	} else {
+		console.log("Anonymous user")
+	}
+}
+
+function loginAdmin(lobbyId, password) {
+	console.log("Login Admin", lobbyId, password);
+	socket.emit("loginAdmin", {lobbyId:lobbyId, password: password});
+}
+
+function loginGuest(lobbyId) {
+	console.log("Login Guest", lobbyId);
+	socket.emit("loginGuest", {lobbyId: lobbyId});
+}
+
+joinLobbyFromUrl();

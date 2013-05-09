@@ -44,3 +44,17 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 	float:left;
 	text-align: center;
 }
+
+#chatMessages {
+	height: 300px;
+	overflow:scroll;
+}
+
+#chat {
+	float:right;
+	margin-right: 50px;
+}
+
+#adminUrl, #guestUrl {
+	width: 300px;
+}

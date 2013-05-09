@@ -5,6 +5,7 @@ var url = require('url');
 var fs = require('fs');
 //var async = require('async');
 var words = []
+var io = require('socket.io').listen(8001);
 
 fs.readFile('words.txt', function(err, data) {
 	if(err) throw err;
@@ -45,5 +46,36 @@ function toTitleCase(str)
 server.listen(8000);
 
 console.log("Server running at http://127.0.0.1:8000/");
+
+
+io.sockets.on('connection', function (socket) {
+	socket.on('chat', function (data) {
+		socket.broadcast.emit("chat", data);
+		socket.emit("chat", data);
+		console.log(data);
+	});
+	socket.on('createLobby', function() {
+		var data = createLobby();
+		socket.emit("lobbyCreated", data);
+	})
+	socket.on("loginAdmin", function(data) {
+		console.log("Login Admin", data);
+		var lobby = lobbies[data.lobbyId];
+		lobby.connectedSockets.push(socket);
+	});
+	socket.on("loginGuest", function(data) {
+		console.log("Login Guest", data);
+	});
+});
+
+var lobbies = [];
+
+
+function createLobby() {
+	var password = Math.random().toString().substring(2);
+	lobbies.push({password: password, connectedSockets:[]});
+	return {lobbyId: lobbies.length-1, password: password};
+}
+
 
 
