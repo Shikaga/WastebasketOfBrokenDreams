@@ -1,10 +1,4 @@
-function getWords(callback) {
-//	$.ajax({
-//		url: "http://localhost:8000/?getWords",
-//		context: document.body
-//	}).done(function(data) {
-//			callback(data.word1, data.word2);
-//		});
+function getWords() {
 	console.log("lobbyId", lobbyIdA);
 	if (lobbyIdA != null ) {
 		console.log("Win!")
@@ -12,24 +6,12 @@ function getWords(callback) {
 	} else {
 		socket.emit("drawWords");
 	}
-	socket.on("wordsDrawn", function(data) {
-		callback(data.word1, data.word2);
-	});
-}
-
-function setWordsToDivs(div1, div2) {
-	getWords(
-		function(word1, word2) {
-			div1.innerHTML = word1;
-			div2.innerHTML = word2;
-		}
-	)
 }
 
 var timerId;
 
 function ReadySetArt() {
-	setWordsToDivs(document.getElementById("idea1"), document.getElementById("idea2"));
+	getWords();
 	var timer = new Timer();
 	timer.startTimer();
 	var hoursDiv = document.getElementById("hours");
@@ -69,9 +51,6 @@ socket.on('chat', function (data) {
 	console.log(data);
 	receiveChatMessage(data);
 });
-
-function sendChatMessage(user,message) {
-}
 
 function receiveChatMessage(data) {
 	console.log(data);
@@ -138,13 +117,14 @@ function loginAdmin(lobbyId, password) {
 function loginGuest(lobbyId) {
 	console.log("Login Guest", lobbyId);
 	socket.emit("loginGuest", {lobbyId: lobbyId});
-	socket.on("wordsDrawn", function(data) {
-		console.log(data);
-		var div1 = document.getElementById("idea1");
-		var div2 = document.getElementById("idea2");
-		div1.innerHTML = data.word1;
-		div2.innerHTML = data.word2;
-	});
 }
 
 joinLobbyFromUrl();
+
+socket.on("wordsDrawn", function(data) {
+	console.log(data);
+	var div1 = document.getElementById("idea1");
+	var div2 = document.getElementById("idea2");
+	div1.innerHTML = data.word1;
+	div2.innerHTML = data.word2;
+});
