@@ -71,12 +71,17 @@ io.sockets.on('connection', function (socket) {
 	});
 	socket.on("drawWords", function(data) {
 		console.log(data);
-		var lobby = lobbies[data.lobbyId];
-		if (lobby != null) {
-			var randomWords = getRandomWords();
-			for (var i=0; i < lobby.connectedSockets.length; i++) {
-				lobby.connectedSockets[i].emit("wordsDrawn", randomWords)
+		if (data) {
+
+			var lobby = lobbies[data.lobbyId];
+			if (lobby != null) {
+				var randomWords = getRandomWords();
+				for (var i=0; i < lobby.connectedSockets.length; i++) {
+					lobby.connectedSockets[i].emit("wordsDrawn", randomWords)
+				}
 			}
+		} else {
+			socket.emit("wordsDrawn", getRandomWords());
 		}
 	});
 });
