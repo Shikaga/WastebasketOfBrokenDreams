@@ -29,7 +29,7 @@ var server = http.createServer(function (request, response) {
 });
 
 function getRandomWords() {
-	return JSON.stringify({word1: getRandomWord(), word2: getRandomWord()});
+	return {word1: getRandomWord(), word2: getRandomWord()};
 }
 
 function getRandomWord() {
@@ -59,11 +59,25 @@ io.sockets.on('connection', function (socket) {
 	socket.on("loginAdmin", function(data) {
 		console.log("Login Admin", data);
 		var lobby = lobbies[data.lobbyId];
-		lobby.connectedSockets.push(socket);
+		if (lobby != null) {
+			lobby.connectedSockets.push(socket);
+		}
 	});
 	socket.on("loginGuest", function(data) {
 		var lobby = lobbies[data.lobbyId];
-		lobby.connectedSockets.push(socket);
+		if (lobby != null) {
+			lobby.connectedSockets.push(socket);
+		}
+	});
+	socket.on("drawWords", function(data) {
+		console.log(data);
+		var lobby = lobbies[data.lobbyId];
+		if (lobby != null) {
+			var randomWords = getRandomWords();
+			for (var i=0; i < lobby.connectedSockets.length; i++) {
+				lobby.connectedSockets[i].emit("wordsDrawn", randomWords)
+			}
+		}
 	});
 });
 

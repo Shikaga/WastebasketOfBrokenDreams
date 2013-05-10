@@ -1,10 +1,20 @@
 function getWords(callback) {
-	$.ajax({
-		url: "http://localhost:8000/?getWords",
-		context: document.body
-	}).done(function(data) {
-			callback(data.word1, data.word2);
-		});
+//	$.ajax({
+//		url: "http://localhost:8000/?getWords",
+//		context: document.body
+//	}).done(function(data) {
+//			callback(data.word1, data.word2);
+//		});
+	console.log("lobbyId", lobbyIdA);
+	if (lobbyIdA != null ) {
+		console.log("Win!")
+		socket.emit("drawWords", {lobbyId: lobbyIdA, password:passwordA});
+	} else {
+		socket.emit("drawWords");
+	}
+	socket.on("wordsDrawn", function(data) {
+		callback(data.word1, data.word2);
+	});
 }
 
 function setWordsToDivs(div1, div2) {
@@ -95,6 +105,7 @@ function createLobby() {
 }
 
 var lobbyIdA;
+var passwordA;
 
 function joinLobbyFromUrl() {
 	var hash = document.location.hash.substring(1);
@@ -102,6 +113,7 @@ function joinLobbyFromUrl() {
 		if (hash.indexOf("A") !== -1) {
 			var lobbyId = hash.split("A")[0];
 			var password = hash.split("A")[1];
+			passwordA = password;
 		} else {
 			var lobbyId = hash;
 		}
@@ -126,6 +138,13 @@ function loginAdmin(lobbyId, password) {
 function loginGuest(lobbyId) {
 	console.log("Login Guest", lobbyId);
 	socket.emit("loginGuest", {lobbyId: lobbyId});
+	socket.on("wordsDrawn", function(data) {
+		console.log(data);
+		var div1 = document.getElementById("idea1");
+		var div2 = document.getElementById("idea2");
+		div1.innerHTML = data.word1;
+		div2.innerHTML = data.word2;
+	});
 }
 
 joinLobbyFromUrl();
