@@ -1,8 +1,8 @@
 function getWords() {
-	console.log("lobbyId", lobbyIdA);
-	if (lobbyIdA != null ) {
+	console.log("lobbyId", lobbyId);
+	if (lobbyId != null ) {
 		console.log("Win!")
-		socket.emit("drawWords", {lobbyId: lobbyIdA, password:passwordA});
+		socket.emit("drawWords", {lobbyId: lobbyId, password:password});
 	} else {
 		socket.emit("drawWords");
 	}
@@ -49,28 +49,20 @@ Timer.prototype.getTimeRemaining = function() {
 var socket = io.connect('http://localhost:8001');
 socket.on('chat', function (data) {
 	console.log(data);
-	receiveChatMessage(data);
+	lobbyHandler.receiveChatMessage(data);
 });
 
-function receiveChatMessage(data) {
-	console.log(data);
-	var messagesDiv = document.getElementById("chatMessages");
-	var messageDiv = document.createElement("div");
-	messageDiv.innerHTML = data.user + ": " + data.message;
-	messagesDiv.appendChild(messageDiv);
+var LobbyHandler = function() {
+	this.lobbyId;
+	this.password;
 }
 
-function chatButtonClicked() {
-	var message = document.getElementById("chatMessage").value;
-	var username = document.getElementById("username").value;
-	document.getElementById("chatMessage").value = "";
-	socket.emit('chat', { lobby: lobbyIdA, user: username, message: message });
-}
-
-function createLobby() {
+LobbyHandler.prototype.createLobby = function() {
+	var self = this;
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
-		lobbyIdA = data.lobbyId;
+		this.lobbyId = data.lobbyId;
+		this.password = data.password;
 		console.log("Lobby created", data);
 		var adminUrl = data.lobbyId + "A" + data.password;
 		var guestUrl = data.lobbyId;
@@ -79,47 +71,60 @@ function createLobby() {
 		document.getElementById("guestUrl").value = document.location.href + "#" + guestUrl;
 
 		document.location.hash = adminUrl;
-		loginAdmin(data.lobbyId, data.password);
+		self.loginAdmin(data.lobbyId, data.password);
 	});
 }
 
-var lobbyIdA;
-var passwordA;
-
-function joinLobbyFromUrl() {
+LobbyHandler.prototype.joinLobbyFromUrl = function() {
 	var hash = document.location.hash.substring(1);
 	if (hash != "") {
+		var lobbyIdentifier;
 		if (hash.indexOf("A") !== -1) {
-			var lobbyId = hash.split("A")[0];
+			lobbyIdentifier = hash.split("A")[0];
 			var password = hash.split("A")[1];
-			passwordA = password;
+			this.password = password;
 		} else {
-			var lobbyId = hash;
+			lobbyIdentifier = hash;
 		}
 		if (password) {
-			loginAdmin(lobbyId,password);
-		} else if (lobbyId ){
-			loginGuest(lobbyId);
+			this.loginAdmin(lobbyIdentifier,password);
+		} else if (lobbyIdentifier ){
+			this.loginGuest(lobbyIdentifier);
 		} else {
 			console.log("WTF?");
 		}
-		lobbyIdA = parseInt(lobbyId);
+		this.lobbyId = parseInt(lobbyIdentifier);
 	} else {
 		console.log("Anonymous user")
 	}
 }
 
-function loginAdmin(lobbyId, password) {
+LobbyHandler.prototype.loginAdmin = function(lobbyId, password) {
 	console.log("Login Admin", lobbyId, password);
 	socket.emit("loginAdmin", {lobbyId:lobbyId, password: password});
 }
 
-function loginGuest(lobbyId) {
+LobbyHandler.prototype.loginGuest = function(lobbyId) {
 	console.log("Login Guest", lobbyId);
 	socket.emit("loginGuest", {lobbyId: lobbyId});
 }
 
-joinLobbyFromUrl();
+LobbyHandler.prototype.receiveChatMessage = function(data) {
+	console.log(data);
+	var messagesDiv = document.getElementById("chatMessages");
+	var messageDiv = document.createElement("div");
+	messageDiv.innerHTML = data.user + ": " + data.message;
+	messagesDiv.appendChild(messageDiv);
+}
+
+LobbyHandler.prototype.chatButtonClicked = function() {
+	var message = document.getElementById("chatMessage").value;
+	var username = document.getElementById("username").value;
+	document.getElementById("chatMessage").value = "";
+	socket.emit('chat', { lobby: this.lobbyId, user: username, message: message });
+}
+
+
 
 socket.on("wordsDrawn", function(data) {
 	console.log(data);
@@ -128,3 +133,14 @@ socket.on("wordsDrawn", function(data) {
 	div1.innerHTML = data.word1;
 	div2.innerHTML = data.word2;
 });
+
+var lobbyHandler = new LobbyHandler();
+lobbyHandler.joinLobbyFromUrl();
+
+function chatButtonClicked() {
+	lobbyHandler.chatButtonClicked();
+}
+
+function createLobby() {
+	lobbyHandler.createLobby();
+}
