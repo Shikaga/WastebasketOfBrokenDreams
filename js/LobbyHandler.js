@@ -4,9 +4,11 @@ var LobbyHandler = function() {
 }
 
 LobbyHandler.prototype.createLobby = function() {
+	hideCreateLobby();
 	var self = this;
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
+		showChat();
 		self.lobbyId = data.lobbyId;
 		self.password = data.password;
 		console.log("Lobby created", data);
@@ -24,7 +26,7 @@ LobbyHandler.prototype.createLobby = function() {
 LobbyHandler.prototype.joinLobbyFromUrl = function() {
 	var hash = document.location.hash.substring(1);
 	if (hash != "") {
-		hideDrawButton();
+		hideCreateLobby();
 		var lobbyIdentifier;
 		if (hash.indexOf("A") !== -1) {
 			lobbyIdentifier = hash.split("A")[0];
@@ -35,12 +37,15 @@ LobbyHandler.prototype.joinLobbyFromUrl = function() {
 		}
 		if (password) {
 			this.loginAdmin(lobbyIdentifier,password);
+			document.getElementById("guestUrl").value = document.location.href.split("A")[0];
+			showLobby();
 		} else if (lobbyIdentifier ){
 			hideDrawButton();
 			this.loginGuest(lobbyIdentifier);
 		} else {
 			console.log("WTF?");
 		}
+		showChat();
 		this.lobbyId = parseInt(lobbyIdentifier);
 	} else {
 		console.log("Anonymous user")

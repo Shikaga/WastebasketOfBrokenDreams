@@ -52,7 +52,28 @@ function showTime() {
 	button.style["display"] = "block";
 }
 
+function showLobby() {
+	var button = document.getElementById("lobby");
+	button.style["display"] = "block";
+}
+
+function showChat() {
+	var button = document.getElementById("chat");
+	button.style["display"] = "block";
+}
+
+function hideCreateLobby() {
+	var div = document.getElementById("createLobby");
+	div.style["display"] = "none";
+}
+
 function hideDrawButton() {
 	var div = document.getElementById("drawIdeasButton");
 	div.style["display"] = "none";
 }
+
+$("#chatMessage").keyup(function (e) {
+	if (e.keyCode == 13) {
+		lobbyHandler.chatButtonClicked();
+	}
+});

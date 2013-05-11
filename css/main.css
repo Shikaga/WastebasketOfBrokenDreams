@@ -55,7 +55,8 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 
 #chat {
 	display:none;
-	float:right;
+	position: absolute;
+	right: 0;
 	margin-right: 50px;
 	background-color: white;
 	color:black;
@@ -103,4 +104,8 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 	border-radius: 5px;
 
 	/*584*/
+}
+
+#createLobby {
+	float:right;
 }

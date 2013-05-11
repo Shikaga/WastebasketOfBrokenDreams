@@ -7,8 +7,9 @@
 	</head>
 	<body>
 		<div id="testbar"><a class="testbar" href="test/test.html" target="_blank">Run the Tests!</a></div>
+		<button id="createLobby" onclick="createLobby()">Create Lobby</button><br />
 		<div id="lobby">
-			<button onclick="createLobby()">Create Lobby</button><br />
+			Invite people to your game:
 			<input style="display:none" readonly="true" id="adminUrl"/><br />
 			<input readonly="true" id="guestUrl" />
 		</div>
@@ -21,7 +22,7 @@
 		<br style="clear:both;"/>
 		<div id="chat">
 			<div id="chatMessages"></div><br />
-			Username: <input value="user1" id="username"/><br />
+			Username: <input value="Anonymous" id="username"/><br />
 			<input value="Hello!" id="chatMessage"/>
 			<button onclick="chatButtonClicked()">Send</button>
 		</div>
