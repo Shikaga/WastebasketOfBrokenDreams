@@ -7,7 +7,6 @@ LobbyHandler.prototype.createLobby = function() {
 	var self = this;
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
-		debugger;
 		self.lobbyId = data.lobbyId;
 		self.password = data.password;
 		console.log("Lobby created", data);

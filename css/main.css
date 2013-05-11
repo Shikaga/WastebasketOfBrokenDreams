@@ -1,5 +1,7 @@
 body {
 	margin: 0px;
+	background-color:black;
+	color:white;
 }
 
 #testbar
@@ -22,20 +24,21 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #main {
-	width:400px;
-	height:400px;
+	width:584px;
+	height:664px;
 	margin:auto;
 }
 
 #wastebasket {
-
-	background-color: #999999;
+	width:584px;
+	height:664px;
+	background-image: url("../imgs/Wastebasket.png");
 }
 
 #drawIdeasButton {
 	width:100px;
 	height:100px;
-	margin: 150px;
+	margin: 242px; /*584-100 / 2*/
 }
 
 .idea {
