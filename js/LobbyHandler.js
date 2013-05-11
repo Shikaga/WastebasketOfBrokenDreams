@@ -7,8 +7,9 @@ LobbyHandler.prototype.createLobby = function() {
 	var self = this;
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
-		this.lobbyId = data.lobbyId;
-		this.password = data.password;
+		debugger;
+		self.lobbyId = data.lobbyId;
+		self.password = data.password;
 		console.log("Lobby created", data);
 		var adminUrl = data.lobbyId + "A" + data.password;
 		var guestUrl = data.lobbyId;

@@ -21,17 +21,14 @@ var server = http.createServer(function (request, response) {
 			{"Content-Type": "application/json",
 				"Access-Control-Allow-Origin": "*"});
 		var queryData = url.parse(request.url, true).query;
-		if (queryData["getWords"] != null) {
-			response.write(getRandomWords());
-			response.end("");
-		} else {
+		{
 			response.end();
 		}
 	}
 });
 
 function getRandomWords() {
-	return {word1: getRandomWord(), word2: getRandomWord(), timeRemaining: millisecondsIn90Minutes};
+	return {word1: getRandomWord(), word2: getRandomWord()};
 }
 
 function getRandomWord() {
@@ -63,30 +60,48 @@ io.sockets.on('connection', function (socket) {
 		var lobby = lobbies[data.lobbyId];
 		if (lobby != null) {
 			lobby.connectedSockets.push(socket);
+			sendWords(socket,lobby);
 		}
 	});
 	socket.on("loginGuest", function(data) {
 		var lobby = lobbies[data.lobbyId];
 		if (lobby != null) {
 			lobby.connectedSockets.push(socket);
+			sendWords(socket,lobby);
 		}
 	});
 	socket.on("drawWords", function(data) {
-		console.log(data);
+		console.log("draw", data);
+		var randomWords = getRandomWords();
+		var timeNow = new Date().getTime();
+		var endTime = timeNow + millisecondsIn90Minutes
 		if (data) {
-
 			var lobby = lobbies[data.lobbyId];
 			if (lobby != null) {
-				var randomWords = getRandomWords();
+				lobby.word1 = randomWords.word1;
+				lobby.word2 = randomWords.word2;
+				lobby.endTime = endTime;
 				for (var i=0; i < lobby.connectedSockets.length; i++) {
-					lobby.connectedSockets[i].emit("wordsDrawn", randomWords)
+					sendWords(lobby.connectedSockets[i],lobby);
 				}
 			}
 		} else {
-			socket.emit("wordsDrawn", getRandomWords());
+			var timeRemaining = endTime - timeNow;
+			var returnMessage = randomWords;
+			returnMessage["timeRemaining"]=timeRemaining;
+			socket.emit("wordsDrawn", returnMessage);
 		}
 	});
 });
+
+function sendWords(socket, lobby) {
+	console.log("SEND WORDS", lobby);
+	if (lobby.word1 != null) {
+		console.log(0);
+		socket.emit("wordsDrawn",
+			{word1:lobby.word1, word2:lobby.word2, timeRemaining: lobby.endTime - new Date().getTime()});
+	}
+}
 
 var lobbies = [];
 
