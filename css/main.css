@@ -73,6 +73,7 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #time {
+	display:none;
 	float:right;
 }
 #timeRemaining {
@@ -89,6 +90,7 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #words {
+	display:none;
 	margin-top: -300px;
 }
 

@@ -24,6 +24,7 @@ LobbyHandler.prototype.createLobby = function() {
 LobbyHandler.prototype.joinLobbyFromUrl = function() {
 	var hash = document.location.hash.substring(1);
 	if (hash != "") {
+		hideDrawButton();
 		var lobbyIdentifier;
 		if (hash.indexOf("A") !== -1) {
 			lobbyIdentifier = hash.split("A")[0];
@@ -35,6 +36,7 @@ LobbyHandler.prototype.joinLobbyFromUrl = function() {
 		if (password) {
 			this.loginAdmin(lobbyIdentifier,password);
 		} else if (lobbyIdentifier ){
+			hideDrawButton();
 			this.loginGuest(lobbyIdentifier);
 		} else {
 			console.log("WTF?");

@@ -10,6 +10,9 @@ socket.on("wordsDrawn", function(data) {
 	div1.innerHTML = data.word1;
 	div2.innerHTML = data.word2;
 	timer.readySetArt(data.timeRemaining);
+	hideDrawButton();
+	showWordsButtons();
+	showTime();
 });
 
 var timer = new Timer();
@@ -37,4 +40,19 @@ function getWords() {
 
 function ReadySetArt() {
 	getWords();
+}
+
+function showWordsButtons() {
+	var button = document.getElementById("words");
+	button.style["display"] = "block";
+}
+
+function showTime() {
+	var button = document.getElementById("time");
+	button.style["display"] = "block";
+}
+
+function hideDrawButton() {
+	var div = document.getElementById("drawIdeasButton");
+	div.style["display"] = "none";
 }
