@@ -52,7 +52,7 @@ function toTitleCase(str)
 	return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
-server.listen(8000);
+server.listen(80);
 
 console.log("Server running at http://127.0.0.1:8000/");
 
