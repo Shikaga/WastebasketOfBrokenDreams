@@ -6,6 +6,8 @@ var fs = require('fs');
 //var async = require('async');
 var words = []
 var io = require('socket.io').listen(8001);
+var millisecondsIn90Minutes = 1000 * 60 * 90;
+
 
 fs.readFile('words.txt', function(err, data) {
 	if(err) throw err;
@@ -29,7 +31,7 @@ var server = http.createServer(function (request, response) {
 });
 
 function getRandomWords() {
-	return {word1: getRandomWord(), word2: getRandomWord()};
+	return {word1: getRandomWord(), word2: getRandomWord(), timeRemaining: millisecondsIn90Minutes};
 }
 
 function getRandomWord() {

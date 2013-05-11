@@ -9,6 +9,7 @@ socket.on("wordsDrawn", function(data) {
 	var div2 = document.getElementById("idea2");
 	div1.innerHTML = data.word1;
 	div2.innerHTML = data.word2;
+	timer.readySetArt(data.timeRemaining);
 });
 
 var timer = new Timer();
@@ -35,5 +36,5 @@ function getWords() {
 }
 
 function ReadySetArt() {
-	timer.readySetArt();
+	getWords();
 }
