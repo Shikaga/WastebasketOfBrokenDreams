@@ -1,0 +1,12 @@
+{
+	"name": "WasteBasketOfBrokenDreams",
+	"version": "0.0.1",
+	"dependencies": {
+		"node-static": "0.6.9",
+		"socket.io":  "0.9.10"
+	},
+	"engines": {
+		"node": "0.10.x",
+		"npm": "1.2.x"
+	}
+}
