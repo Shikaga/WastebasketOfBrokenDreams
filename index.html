@@ -12,25 +12,29 @@
 		<div id="testbar"><a class="testbar" href="test/test.html" target="_blank">Run the Tests!</a></div>
 		<div id="lobby">
 			<button onclick="createLobby()">Create Lobby</button><br />
-			<input readonly="true" id="adminUrl"/><br />
+			<input style="display:none" readonly="true" id="adminUrl"/><br />
 			<input readonly="true" id="guestUrl" />
 		</div>
+		<div id="time">
+			<div id="timeRemaining">Time Remaining:</div>
+			<div id="hours"></div>
+			<div id="minutes"></div>
+			<div id="seconds"></div>
+		</div>
+		<br style="clear:both;"/>
 		<div id="chat">
-			<input value="user1" id="username"/><br />
 			<div id="chatMessages"></div><br />
+			Username: <input value="user1" id="username"/><br />
 			<input value="Hello!" id="chatMessage"/>
 			<button onclick="chatButtonClicked()">Send</button>
 		</div>
 		<div id="main">
-			<div id="time">
-				<div id="hours"></div>
-				<div id="minutes"></div>
-				<div id="seconds"></div>
-			</div>
 			<div id="wastebasket">
 				<button id="drawIdeasButton" onclick="ReadySetArt()">Draw Ideas</button>
 			</div>
-			<div id="idea1" class="idea"></div><div id="idea2" class="idea"></div>
+			<div id="words">
+				<div id="idea1" class="idea"></div><div id="idea2" class="idea"></div>
+			</div>
 		</div>
 	</body>
 </html>

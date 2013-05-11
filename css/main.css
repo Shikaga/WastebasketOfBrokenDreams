@@ -54,10 +54,51 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #chat {
+	display:none;
 	float:right;
 	margin-right: 50px;
+	background-color: white;
+	color:black;
 }
 
 #adminUrl, #guestUrl {
 	width: 300px;
+}
+
+#lobby {
+	display:none;
+	background-color: white;
+	color:black;
+	width: 400px;
+}
+
+#time {
+	float:right;
+}
+#timeRemaining {
+	float:left;
+}
+#hours, #minutes, #seconds{
+	float: left;
+	min-width:50px;
+	text-align: center;
+	margin: 5px;
+	background-color:white;
+	border-radius: 5px;
+	color:black;
+}
+
+#words {
+	margin-top: -300px;
+}
+
+#idea1, #idea2{
+	background-color:white;
+	color: black;
+	width:150px;
+	padding:25px;
+	margin:46px;
+	border-radius: 5px;
+
+	/*584*/
 }
