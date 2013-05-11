@@ -3,28 +3,38 @@
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+var util = require('util');
+var static = require('node-static');
 //var async = require('async');
 var words = []
 var io = require('socket.io').listen(8001);
 var millisecondsIn90Minutes = 1000 * 60 * 90;
 
-
+var webroot = '.';
 fs.readFile('words.txt', function(err, data) {
 	if(err) throw err;
 	words = data.toString().split("\n");
 });
-
-// Configure our HTTP server to respond with Hello World to all requests.
-var server = http.createServer(function (request, response) {
-	if (request.url != "/favicon.ico") {
-		response.writeHead(200,
-			{"Content-Type": "application/json",
-				"Access-Control-Allow-Origin": "*"});
-		var queryData = url.parse(request.url, true).query;
-		{
-			response.end();
-		}
-	}
+var file = new(static.Server)(webroot, {
+	cache: 600,
+	headers: { 'X-Powered-By': 'node-static' }
+});
+var server = http.createServer(function (req, res) {
+	req.addListener('end', function() {
+		file.serve(req, res, function(err, result) {
+			if (err) {
+				console.error('Error serving %s - %s', req.url, err.message);
+				if (err.status === 404 || err.status === 500) {
+					file.serveFile(util.format('/%d.html', err.status), err.status, {}, req, res);
+				} else {
+					res.writeHead(err.status, err.headers);
+					res.end();
+				}
+			} else {
+				console.log('%s - %s', req.url, res.message);
+			}
+		});
+	});
 });
 
 function getRandomWords() {
