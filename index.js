@@ -1,6 +1,6 @@
-var port = 8000;
+var port = 5000;
 if (process.env.PORT) {
-	port = Number(port = process.env.PORT);
+	port = Number(process.env.PORT);
 }
 
 console.log("Using port: " + port);

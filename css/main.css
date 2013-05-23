@@ -30,15 +30,16 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #wastebasket {
+	text-align: center;
 	width:584px;
 	height:664px;
 	background-image: url("../imgs/Wastebasket.png");
 }
 
 #drawIdeasButton {
-	width:100px;
+	/*width:100px;
 	height:100px;
-	margin: 242px; /*584-100 / 2*/
+	margin: 242px;*/ /*584-100 / 2*/
 }
 
 .idea {
@@ -107,5 +108,5 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #createLobby {
-	float:right;
+	/*float:right;*/
 }

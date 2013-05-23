@@ -65,6 +65,8 @@ function showChat() {
 function hideCreateLobby() {
 	var div = document.getElementById("createLobby");
 	div.style["display"] = "none";
+	var orDiv = document.getElementById("OrDiv");
+	orDiv.style["display"] = "none";
 }
 
 function hideDrawButton() {
