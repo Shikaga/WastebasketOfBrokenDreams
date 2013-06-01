@@ -15,6 +15,10 @@ var static = require('node-static');
 ////var async = require('async');
 var words = []
 var io = require('socket.io').listen(port);
+io.configure(function () {
+	io.set("transports", ["xhr-polling"]);
+	io.set("polling duration", 10);
+});
 var millisecondsIn90Minutes = 1000 * 60 * 90;
 
 fs.readFile('words.txt', function(err, data) {
