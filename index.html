@@ -16,32 +16,36 @@
 			<div id="seconds"></div>
 		</div>
 		<br style="clear:both;"/>
-		<div id="chat">
-			<div id="lobby">
-				Invite people to your game:
-				<input style="display:none" readonly="true" id="adminUrl"/><br />
-				<input readonly="true" id="guestUrl" />
-			</div>
-			<div id="chatMessages"></div><br />
-			Username: <input value="Anonymous" id="username"/><br />
-			<input value="Hello!" id="chatMessage"/>
-			<button onclick="chatButtonClicked()">Send</button>
-		</div>
+		<div>
 		<div id="main">
-			<div id="wastebasket">
-				<div style="height: 300px"></div>
-				<button class="btn btn-large btn-success" id="drawIdeasButton" onclick="ReadySetArt()">Draw Ideas</button>
-				<br/>
-				<br/>
-				<div id="OrDiv">Or</div>
-				<br/>
-				<br/>
-				<button class="btn btn-large" id="createLobby" onclick="createLobby()">Create Lobby</button><br />
+			<div id="chat">
+				<div id="lobby">
+					Invite people to your game:
+					<input style="display:none" readonly="true" id="adminUrl"/><br />
+					<input readonly="true" id="guestUrl" />
+				</div>
+				<div id="chatMessages"></div><br />
+				Username: <input value="Anonymous" id="username"/><br />
+				<input value="Hello!" id="chatMessage"/>
+				<button onclick="chatButtonClicked()">Send</button>
+			</div>
+				<div id="wastebasket">
+					<div style="height: 300px"></div>
+					<button class="btn btn-large btn-success" id="drawIdeasButton" onclick="ReadySetArt()">Draw Ideas</button>
+					<br/>
+					<br/>
+					<div id="OrDiv">Or</div>
+					<br/>
+					<br/>
+					<button class="btn btn-large" id="createLobby" onclick="createLobby()">Create Lobby</button><br />
+				</div>
 
+				<div id="words">
+					<div id="idea1" class="idea"></div><div id="idea2" class="idea"></div>
+				</div>
 			</div>
-			<div id="words">
-				<div id="idea1" class="idea"></div><div id="idea2" class="idea"></div>
-			</div>
+
+
 		</div>
 	</body>
 	<script src="js/LobbyHandler.js"></script>

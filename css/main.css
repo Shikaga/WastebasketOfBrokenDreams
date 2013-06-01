@@ -24,15 +24,14 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #main {
-	width:584px;
-	height:664px;
-	margin:auto;
 }
 
 #wastebasket {
 	text-align: center;
 	width:584px;
 	height:664px;
+	/*margin:auto;*/
+	float:right;
 	background-image: url("../imgs/Wastebasket.png");
 }
 
@@ -55,12 +54,12 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 }
 
 #chat {
+	width:400px;
 	display:none;
-	position: absolute;
-	right: 0;
 	margin-right: 50px;
 	background-color: white;
 	color:black;
+	float:right;
 }
 
 #adminUrl, #guestUrl {
