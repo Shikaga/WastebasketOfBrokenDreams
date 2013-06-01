@@ -11,13 +11,23 @@ console.log("Using port: " + port);
 var http = require('http');
 var url = require('url');
 var fs = require('fs');
+var express = require('express');
 var static = require('node-static');
 ////var async = require('async');
-var words = []
-var io = require('socket.io').listen(port);
+var words = [];
+
+var app = express(),
+server = require('http').createServer(app),
+io = require('socket.io').listen(server);
+app.configure(function() {
+	app.use("/", express.static(__dirname));
+})
+server.listen(port);
+
 io.configure(function () {
 	io.set("transports", ["xhr-polling"]);
 	io.set("polling duration", 10);
+	io.set("origins", "*:*");
 });
 var millisecondsIn90Minutes = 1000 * 60 * 90;
 
