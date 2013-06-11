@@ -93,7 +93,10 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 
 #words {
 	display:none;
+	margin:	auto;
+	width: 584px;
 	margin-top: -300px;
+	padding: 0 70px;
 }
 
 #idea1, #idea2{

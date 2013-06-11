@@ -82,7 +82,7 @@ function hideCreateLobby() {
 }
 
 function hideDrawButton() {
-	var div = document.getElementById("drawIdeasButton");
+	var div = document.getElementById("mainButtons");
 	div.style["display"] = "none";
 }
 
