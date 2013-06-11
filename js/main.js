@@ -15,6 +15,7 @@ socket.on("wordsDrawn", function(data) {
 	showTime();
 });
 
+var chatOpen = false;
 var timer = new Timer();
 var lobbyHandler = new LobbyHandler();
 
@@ -58,8 +59,19 @@ function showLobby() {
 }
 
 function showChat() {
+	chatOpen = true;
 	var button = document.getElementById("chat");
 	button.style["display"] = "block";
+	setChatSize();
+
+}
+
+function setChatSize() {
+	if (chatOpen) {
+		var width = document.width - 450;
+		var main = document.getElementById("main");
+		main.style["width"] = width + "px";
+	}
 }
 
 function hideCreateLobby() {
@@ -79,3 +91,7 @@ $("#chatMessage").keyup(function (e) {
 		lobbyHandler.chatButtonClicked();
 	}
 });
+
+window.onresize = function(e) {
+	setChatSize();
+}
