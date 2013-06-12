@@ -16,7 +16,7 @@ var express = require('express');
 var words = [];
 
 var app = express(),
-server = require('http').createServer(app),
+server = app.listen(port);//require('http').createServer(app),
 io = require('socket.io').listen(server);
 io.configure(function () {
 	io.set("transports", ["xhr-polling"]);
@@ -26,7 +26,7 @@ io.configure(function () {
 app.configure(function() {
 	app.use("/", express.static(__dirname));
 })
-server.listen(port);
+//server.listen(port);
 
 //var millisecondsIn90Minutes = 1000 * 60 * 90;
 //
