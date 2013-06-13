@@ -1,4 +1,5 @@
-var socket = io.connect('http://localhost:5000');
+
+var socket = io.connect(window.location.href);
 socket.on('chat', function (data) {
 	console.log(data);
 	lobbyHandler.receiveChatMessage(data);
