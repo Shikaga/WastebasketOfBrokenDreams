@@ -5,6 +5,7 @@ var LobbyHandler = function() {
 
 LobbyHandler.prototype.createLobby = function() {
 	hideCreateLobby();
+	showLobby();
 	var self = this;
 	socket.emit("createLobby")
 	socket.on("lobbyCreated", function(data) {
