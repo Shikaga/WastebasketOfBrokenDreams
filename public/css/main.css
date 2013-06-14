@@ -74,14 +74,10 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 	width: 400px;
 }
 
-#time {
-	display:none;
-	float:right;
-}
 #timeRemaining {
 	float:left;
 }
-#hours, #minutes, #seconds{
+#pensDown, #hours, #minutes, #seconds{
 	float: left;
 	min-width:50px;
 	text-align: center;
@@ -89,6 +85,11 @@ a.testbar:link,a.testbar:visited,a.testbar:hover,a.testbar:active
 	background-color:white;
 	border-radius: 5px;
 	color:black;
+}
+
+#time, #pensDown {
+	display:none;
+	float:right;
 }
 
 #words {

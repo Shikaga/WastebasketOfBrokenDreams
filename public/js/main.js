@@ -54,6 +54,12 @@ function showTime() {
 	button.style["display"] = "block";
 }
 
+function hideTime() {
+	var button = document.getElementById("time");
+	button.style["display"] = "none";
+}
+
+
 function showLobby() {
 	var button = document.getElementById("lobby");
 	button.style["display"] = "block";
