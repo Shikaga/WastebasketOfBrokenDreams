@@ -69,8 +69,6 @@ if (process.env.PORT) {
 
 console.log("Using port: " + port);
 
-var millisecondsIn90Minutes = 1000 * 60 * 90;
-
 fs.readFile('words.txt', function(err, data) {
 	if(err) throw err;
 	words = data.toString().split("\n");
@@ -114,12 +112,13 @@ io.sockets.on('connection', function (socket) {
 			sendWords(socket,lobby);
 		}
 	});
+
 	socket.on("drawWords", function(data) {
 		console.log("draw", data);
 		var randomWords = getRandomWords();
 		var timeNow = new Date().getTime();
-		var endTime = timeNow + millisecondsIn90Minutes
-		if (data) {
+		var endTime = timeNow + getMillisecondsForMinutes(data.minutes);
+		if (data.lobbyId) {
 			var lobby = lobbies[data.lobbyId];
 			if (lobby != null) {
 				lobby.word1 = randomWords.word1;
@@ -158,6 +157,9 @@ function sendChatMessages(data) {
 	}
 }
 
+function getMillisecondsForMinutes(minutes) {
+	return 1000 * 60 * minutes;
+}
 
 function createLobby() {
 	var password = Math.random().toString().substring(2);

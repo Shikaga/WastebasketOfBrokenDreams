@@ -34,9 +34,9 @@ function getWords() {
 	console.log("lobbyId", lobbyHandler.lobbyId);
 	if (lobbyHandler.lobbyId != null ) {
 		console.log("Win!")
-		socket.emit("drawWords", {lobbyId: lobbyHandler.lobbyId, password:lobbyHandler.password});
+		socket.emit("drawWords", {minutes: 90, lobbyId: lobbyHandler.lobbyId, password:lobbyHandler.password});
 	} else {
-		socket.emit("drawWords");
+		socket.emit("drawWords", {minutes: 90});
 	}
 }
 
