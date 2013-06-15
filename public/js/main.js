@@ -32,11 +32,12 @@ function createLobby() {
 
 function getWords() {
 	console.log("lobbyId", lobbyHandler.lobbyId);
+	var timeLimit = document.getElementById("timeLimit").value;
 	if (lobbyHandler.lobbyId != null ) {
 		console.log("Win!")
-		socket.emit("drawWords", {minutes: 90, lobbyId: lobbyHandler.lobbyId, password:lobbyHandler.password});
+		socket.emit("drawWords", {minutes: timeLimit, lobbyId: lobbyHandler.lobbyId, password:lobbyHandler.password});
 	} else {
-		socket.emit("drawWords", {minutes: 90});
+		socket.emit("drawWords", {minutes: timeLimit});
 	}
 }
 
